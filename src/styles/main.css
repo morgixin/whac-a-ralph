@@ -62,3 +62,31 @@
 .menu-score h2:nth-child(2) {
     margin-top: 1rem;
 }
+
+.start {
+    display: block;
+}
+
+.reset {
+    display: none;
+}
+
+.reset, .start {
+    width: 200px;
+    height: 50px;
+    font-size: large;
+
+    background-color: #ff0000;
+    color: #ffd700;
+    
+    border: 1px solid transparent;
+    margin: 10px;
+    border-radius: 3px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

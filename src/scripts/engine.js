@@ -14,11 +14,12 @@ const state = {
         hitPosition: 0,
         result: 0,
         currentTime: 15,
+        countDownTimerId: null,
     },
-    actions: {
-        // chama funções
-        countDownTimerId: setInterval(countDown, 1000),
-    }
+}
+
+function beginCountDown() {
+    state.values.countDownTimerId = setInterval(countDown, 1000);
 }
 
 function countDown() {
@@ -26,8 +27,9 @@ function countDown() {
     state.view.timeLeft.textContent = state.values.currentTime;
 
     if (state.values.currentTime <= 0) {
-        clearInterval(state.actions.countDownTimerId);
+        clearInterval(state.values.countDownTimerId);
         clearInterval(state.values.timerId);
+        enableResetButton();
         if (state.values.result < 5) {
             playSound("lost.mp3", 0.5);
             alert(`Game over! Você obteve ${state.values.result} pontos! Mais sorte na próxima`);
@@ -75,8 +77,23 @@ function addListenerHitBox() {
     });
 }
 
+function enableResetButton() {
+    let resetButton = document.getElementById("game-reset");
+    resetButton.style.display = "block";
+}
+
+function disablePlayButton() {
+    let playButton = document.getElementById("game-start");
+    playButton.style.display = "none";
+}
+
 function initialize() { // inicializa
+}
+
+function play() {
+    beginCountDown();
     moveEnemy();
+    disablePlayButton();
     addListenerHitBox();
 }
 
