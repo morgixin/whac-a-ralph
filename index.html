@@ -24,12 +24,12 @@
             </div>
             <div class="menu-lives">
                 <img src="./src/images/player.png" alt="foto do jogador" height="60px" />
-                <h2>x3</h2>
+                <h2>x<span id="number-lives-left">3</span></h2>
             </div>
         </div>
-        <div class="buttons">
-            <button class="reset" id="game-reset" onclick="window.location.reload()">RESET GAME</button>
-            <button class="start" id="game-start" onclick="play()">PLAY!</button>
+        <div id="instructions">
+            <p>Wreck Ralph!</p>
+            <p>you miss, you lose a life</p>
         </div>
         <div class="panel">
             <div class="panel-column">
@@ -49,6 +49,10 @@
                 <div class="square" id="7"></div>
                 <div class="square" id="8"></div>
             </div>
+        </div>
+        <div class="buttons">
+            <button class="reset" id="game-reset" onclick="window.location.reload()">RESET GAME</button>
+            <button class="start" id="game-start" onclick="play()">PLAY!</button>
         </div>
     </div>
 

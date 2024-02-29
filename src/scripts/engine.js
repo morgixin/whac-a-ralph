@@ -6,6 +6,7 @@ const state = {
         enemy: document.querySelector(".enemy"),
         timeLeft: document.querySelector("#time-left"),
         score: document.querySelector("#score"),
+        lives: document.querySelector("#number-lives-left")
     },
     values: {
         // variáveis que alteram coisas não visuais
@@ -15,6 +16,7 @@ const state = {
         result: 0,
         currentTime: 15,
         countDownTimerId: null,
+        lives: 3,
     },
 }
 
@@ -27,19 +29,34 @@ function countDown() {
     state.view.timeLeft.textContent = state.values.currentTime;
 
     if (state.values.currentTime <= 0) {
-        clearInterval(state.values.countDownTimerId);
-        clearInterval(state.values.timerId);
-        enableResetButton();
+        endGame();
         if (state.values.result < 5) {
             playSound("lost.mp3", 0.5);
-            alert(`Game over! Você obteve ${state.values.result} pontos! Mais sorte na próxima`);
+            alert(`Game over! Your score is ${state.values.result} points! Better luck next time`);
         } else if (state.values.result >= 10){
             playSound("level-win.mp3", 0.5);
-            alert(`Game over! Você obteve ${state.values.result} pontos! Parabéns!`);
+            alert(`Game over! Your score is ${state.values.result} points! Congratulations, you won an extra life!`);
+            increaseLives();
         } else {
-            alert(`Game over! Você obteve ${state.values.result} pontos!`);
+            alert(`Game over! You got ${state.values.result} points!`);
         }
     }
+}
+
+endGame = () => {
+    clearInterval(state.values.countDownTimerId);
+    clearInterval(state.values.timerId);
+    enableResetButton();
+}
+
+decreaseLives = () => {
+    state.values.lives--;
+    state.view.lives.innerHTML = state.values.lives;
+}
+
+increaseLives = () => {
+    state.values.lives++;
+    state.view.lives.innerHTML = state.values.lives;
 }
 
 function playSound(audioName, volume) {
@@ -72,6 +89,13 @@ function addListenerHitBox() {
                 state.view.score.textContent = state.values.result;
                 state.values.hitPosition = null;
                 playSound("hit.m4a", 0.3);
+            } else {
+                if (state.values.lives === 0) {
+                    state.view.timeLeft.textContent = state.values.currentTime = 1;
+                    return;
+                }
+                state.values.lives--;
+                state.view.lives.textContent = state.values.lives;
             }
         });
     });
@@ -95,6 +119,7 @@ function play() {
     moveEnemy();
     disablePlayButton();
     addListenerHitBox();
+    document.getElementById("instructions").style.display = "none";
 }
 
 initialize();
